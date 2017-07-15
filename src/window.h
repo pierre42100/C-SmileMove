@@ -21,6 +21,25 @@ int init_SDL();
 int create_WindowAndRenderer(int width, int height, const char *title, SDL_Window **window, SDL_Renderer **renderer);
 
 /**
+ * Create a new texture
+ *
+ * @param SDL_Renderer *renderer The target renderer
+ * @param SDL_Texture *texture The new texture
+ * @param int width
+ * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @return void
+ */
+void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int height);
+
+/**
+ * Clone a texture into a target
+ *
+ * @param SDL_Renderer *renderer The target renderer
+ * @param SDL_Texture *texture The texture
+ */
+void cloneTextureIntoRenderer(SDL_Renderer *renderer, SDL_Texture *texture);
+
+/**
  * Destroy a window and every associated renderers
  *
  * @return void

@@ -4,7 +4,10 @@
  * @author Pierre HUBERT
  */
 
- #include <SDL2/SDL.h>
+#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT 600
+
+#include <SDL2/SDL.h>
 
 /**
  * Static window pointer
@@ -70,6 +73,49 @@ int create_WindowAndRenderer(int width, int height, const char *title, SDL_Windo
 
     //This is a success
     return 0;
+}
+
+/**
+ * Create a new texture
+ *
+ * @param SDL_Renderer *renderer The target renderer
+ * @param SDL_Texture *texture The new texture
+ * @param int width
+ * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @return void
+ */
+void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int height){
+
+    //Check if default width and height were requested
+    if(width == 0){
+        width = WINDOW_WIDTH;
+    }
+    if(height == 0){
+        height = WINDOW_HEIGHT;
+    }
+
+    SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
+
+    //End of function
+    return;
+}
+
+/**
+ * Clone a texture into a target
+ *
+ * @param SDL_Renderer *renderer The target renderer
+ * @param SDL_Texture *texture The texture
+ */
+void cloneTextureIntoRenderer(SDL_Renderer *renderer, SDL_Texture *texture){
+
+    //Check the renderer is the right target
+    SDL_SetRenderTarget(renderer, NULL);
+
+    //Copy the entire texture in the renderer
+    SDL_RenderCopy(renderer, texture, NULL, NULL);
+
+    //End of function
+    return;
 }
 
 /**

@@ -17,10 +17,12 @@ int main(int argc, char *argv[])
     //Initializate variables
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
+    SDL_Texture *texture = NULL;
     Smile smile;
 
     //Prepare colors
     SDL_Color black = {0, 0, 0, 255};
+    SDL_Color blue = {0, 0, 255, 255};
 
     //Initializate SDL
     if(init_SDL() != 0){
@@ -37,8 +39,30 @@ int main(int argc, char *argv[])
     //Fill renderer in black
     fillRenderer(black);
 
+    //Crate a texture with the same size as the renderer
+    createTexture(renderer, texture, 0, 0);
+
     //Create a smile
-    smile = create_smile("smiley.png");
+    smile = create_smile("smile.png", renderer);
+
+        //Choose renderer texture as target
+        SDL_SetRenderTarget(renderer, texture);
+
+        //Fill renderer in black
+        fillRenderer(blue);
+
+        //Update smile location
+        set_new_smile_location(&smile, 5, 50);
+
+        //Make the smile visible
+        make_smile_visible(renderer, &smile);
+
+        //Copy the texture into the renderer
+        cloneTextureIntoRenderer(renderer, texture);
+
+        //Refresh renderer
+        SDL_RenderPresent(renderer);
+
 
     //Pause
     getchar();

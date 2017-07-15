@@ -7,6 +7,8 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
+#include "window.h"
+
 /**
  * Make a pause
  */

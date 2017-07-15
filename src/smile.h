@@ -16,6 +16,7 @@ struct Smile {
 
     //The smile object
     SDL_Surface image;
+    SDL_Texture *texture;
 };
 typedef struct Smile Smile;
 
@@ -23,8 +24,28 @@ typedef struct Smile Smile;
  * Create a new smile
  *
  * @param char filename The path to the smile image file
+ * @param SDL_Renderer *renderer The target renderer (the one that will show the smileys)
  * @return Smile
  */
-Smile create_smile(const char *filename);
+Smile create_smile(const char *filename, SDL_Renderer *renderer);
+
+/**
+ * Set the new location of a smile
+ *
+ * @param Smile *smile The smile object
+ * @param int x
+ * @param int y > Coordinates of the new location
+ * @return void;
+ */
+void set_new_smile_location(Smile *smile, int x, int y);
+
+/**
+ * Make the smile visible on its new location
+ *
+ * @param SDL_Renderer *renderer The target renderer
+ * @param Smile *smile The smile to make visible
+ * @return void
+ */
+void make_smile_visible(SDL_Renderer *renderer, Smile *smile);
 
 #endif // SMILE_H_INCLUDED
