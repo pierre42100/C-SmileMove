@@ -109,9 +109,20 @@ void move_smile(Smile *smile, int max_x, int max_y){
 
     int new_x, new_y;
 
-    //Set new smile width
+    //Set new smile width and height
     new_x = smile->x + smile->w_movement;
     new_y = smile->y + smile->h_movement;
+
+    //Check if we reached the maximum width and / or height
+    if(new_x > (max_x - smile->w/2))
+        smile->w_movement = MOVE_LEFT; //We have to go left
+    if(new_x == 0)
+        smile->w_movement = MOVE_RIGHT; //We have to go right
+
+    if(new_y > (max_y - smile->h/2))
+        smile->h_movement = MOVE_UP; //We have to go up
+    if(new_y == 0)
+        smile->h_movement = MOVE_DOWN; //We have to go down
 
     //Set new smile location
     set_new_smile_location(smile, new_x, new_y);

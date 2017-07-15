@@ -61,6 +61,9 @@ int create_WindowAndRenderer(int width, int height, const char *title, SDL_Windo
 
     //Check if it failed
     if(*renderer == NULL){
+        //Print an error
+        fprintf(stderr, "Couldn't initializate accelerated renderer ! Falling back to software renderer...\n");
+
         *renderer = SDL_CreateRenderer(*window, -1, SDL_RENDERER_SOFTWARE);
     }
 
@@ -95,6 +98,38 @@ void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int 
     }
 
     SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
+
+    //End of function
+    return;
+}
+
+/**
+ * Create a new surface
+ *
+ * @param SDL_Surface **surface The new surface
+ * @param int width
+ * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @return void
+ */
+void createSurface(SDL_Texture **surface, int width, int height){
+
+    //Check if default width and height were requested
+    if(width == 0){
+        width = WINDOW_WIDTH;
+    }
+    if(height == 0){
+        height = WINDOW_HEIGHT;
+    }
+
+    //Create the surface and its form
+    SDL_PixelFormat *surfaceFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+    *surface = SDL_CreateRGBSurface(0, width, height, 32, surfaceFormat->Rmask, surfaceFormat->Gmask, surfaceFormat->Bmask, surfaceFormat->Amask);
+    SDL_FreeFormat(surfaceFormat); //Free surface format
+
+    //Check for errors
+    if(*surface == NULL){
+        fatal_error("Couldn't create a surface !");
+    }
 
     //End of function
     return;

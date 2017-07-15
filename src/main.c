@@ -21,6 +21,10 @@ int main(int argc, char *argv[])
     SDL_Texture *texture = NULL;
     Smile smile;
 
+    //Event catcher
+    SDL_Event event;
+    SDL_bool quit = SDL_FALSE;
+
     //Prepare colors
     SDL_Color black = {0, 0, 0, 255};
     SDL_Color blue = {0, 0, 255, 255};
@@ -41,7 +45,7 @@ int main(int argc, char *argv[])
     fillRenderer(black);
 
     //Crate a texture with the same size as the renderer
-    createTexture(renderer, texture, 0, 0);
+    //createTexture(renderer, texture, 0, 0);
 
     //Create a smile
     smile = create_smile("smile.png", renderer);
@@ -49,13 +53,13 @@ int main(int argc, char *argv[])
     //Inital pause (let the window appear)
     sleep(0.5);
 
-    while(1 == 1){
+    while(!quit){
 
         //Choose renderer texture as target
-        SDL_SetRenderTarget(renderer, texture);
+        //SDL_SetRenderTarget(renderer, texture);
 
         //Fill renderer in black
-        fillRenderer(blue);
+        //fillRenderer(black);
 
         //Update smile location
         move_smile(&smile, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -64,19 +68,21 @@ int main(int argc, char *argv[])
         make_smile_visible(renderer, &smile);
 
         //Copy the texture into the renderer
-        cloneTextureIntoRenderer(renderer, texture);
+        //cloneTextureIntoRenderer(renderer, texture);
 
         //Refresh renderer
         SDL_RenderPresent(renderer);
 
         //Small pause
-        sleep(0.1);
+        sleep(0.9);
+
+        SDL_WaitEventTimeout(&event, 0.5);
+        if(event.type == SDL_QUIT)
+            quit = SDL_TRUE;
+
 
     }
 
-
-    //Pause
-    getchar();
 
     //Destroy windows
     destroy_all_windows();
