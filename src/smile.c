@@ -9,6 +9,11 @@
 
 #include "utils.h"
 
+#define MOVE_DOWN 1
+#define MOVE_UP -1
+#define MOVE_LEFT -1
+#define MOVE_RIGHT 1
+
 /**
  * Smile object structure
  */
@@ -21,6 +26,10 @@ struct Smile {
     //Size of the smile
     int w;
     int h;
+
+    //Movements of the smile
+    int w_movement;
+    int h_movement;
 
     //The smile object
     SDL_Surface *image;
@@ -51,6 +60,10 @@ Smile create_smile(const char *filename, SDL_Renderer *renderer){
     smile.x = 0;
     smile.y = 0;
 
+    //Initialize smile movement
+    smile.w_movement = MOVE_RIGHT;
+    smile.h_movement = MOVE_DOWN;
+
     //Get smile size
     smile.w = smile.image->w;
     smile.h = smile.image->h;
@@ -74,13 +87,36 @@ Smile create_smile(const char *filename, SDL_Renderer *renderer){
  * @param int y > Coordinates of the new location
  * @return void
  */
-void set_new_smile_location(Smile *smile, int x, int y){
+static void set_new_smile_location(Smile *smile, int x, int y){
 
     //Append new location
     smile->x = x;
     smile->y = y;
 
     //End of the function
+    return;
+}
+
+/**
+ * Move a smile
+ *
+ * @param Smile *smile The smile to move
+ * @param int max_x
+ * @param int max_y > The maximum area that can be reached by the smile
+ * @return void
+ */
+void move_smile(Smile *smile, int max_x, int max_y){
+
+    int new_x, new_y;
+
+    //Set new smile width
+    new_x = smile->x + smile->w_movement;
+    new_y = smile->y + smile->h_movement;
+
+    //Set new smile location
+    set_new_smile_location(smile, new_x, new_y);
+
+    //End of function
     return;
 }
 

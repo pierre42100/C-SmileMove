@@ -5,6 +5,7 @@
  */
 
 #include <SDL2/SDL.h>
+#include <unistd.h>
 #include "utils.h"
 #include "window.h"
 #include "smile.h"
@@ -45,6 +46,11 @@ int main(int argc, char *argv[])
     //Create a smile
     smile = create_smile("smile.png", renderer);
 
+    //Inital pause (let the window appear)
+    sleep(0.5);
+
+    while(1 == 1){
+
         //Choose renderer texture as target
         SDL_SetRenderTarget(renderer, texture);
 
@@ -52,7 +58,7 @@ int main(int argc, char *argv[])
         fillRenderer(blue);
 
         //Update smile location
-        set_new_smile_location(&smile, 5, 50);
+        move_smile(&smile, WINDOW_WIDTH, WINDOW_HEIGHT);
 
         //Make the smile visible
         make_smile_visible(renderer, &smile);
@@ -62,6 +68,11 @@ int main(int argc, char *argv[])
 
         //Refresh renderer
         SDL_RenderPresent(renderer);
+
+        //Small pause
+        sleep(0.1);
+
+    }
 
 
     //Pause

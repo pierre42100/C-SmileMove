@@ -12,7 +12,7 @@
 /**
  * Make a pause
  */
-void pause(){
+void sdl_pause(){
         SDL_Event event;
 
         SDL_WaitEvent(&event);

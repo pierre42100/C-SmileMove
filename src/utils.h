@@ -10,7 +10,7 @@
 /**
  * Make pause
  */
-void pause();
+void sdl_pause();
 
 /**
  * Handle fatal errors

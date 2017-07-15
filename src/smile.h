@@ -14,6 +14,10 @@ struct Smile {
     int w;
     int h;
 
+    //Movements of the smile
+    int w_movement;
+    int h_movement;
+
     //The smile object
     SDL_Surface image;
     SDL_Texture *texture;
@@ -38,6 +42,16 @@ Smile create_smile(const char *filename, SDL_Renderer *renderer);
  * @return void;
  */
 void set_new_smile_location(Smile *smile, int x, int y);
+
+/**
+ * Move a smile
+ *
+ * @param Smile *smile The smile to move
+ * @param int max_x
+ * @param int max_y > The maximum area that can be reached by the smile
+ * @return void
+ */
+void move_smile(Smile *smile, int max_x, int max_y);
 
 /**
  * Make the smile visible on its new location
