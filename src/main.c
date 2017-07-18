@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     SDL_Texture *texture = NULL;
-    Smile smile;
+    //SDL_Surface *surface = NULL;
+    Smile smile[2];
 
     //Event catcher
     SDL_Event event;
@@ -45,41 +46,39 @@ int main(int argc, char *argv[])
     fillRenderer(black);
 
     //Crate a texture with the same size as the renderer
-    //createTexture(renderer, texture, 0, 0);
+    createTexture(renderer, texture, 0, 0);
 
-    //Create a smile
-    smile = create_smile("smile.png", renderer);
+    //Create smiles
+    smile[0] = create_smile("smile.png", renderer);
+    smile[1] = create_smile("angry.png", renderer);
+
+    //Put angry smile on the middle of the smile
+    set_new_smile_location(&smile[1], WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
 
     //Inital pause (let the window appear)
     sleep(0.5);
 
     while(!quit){
 
-        //Choose renderer texture as target
-        //SDL_SetRenderTarget(renderer, texture);
-
-        //Fill renderer in black
         //fillRenderer(black);
 
-        //Update smile location
-        move_smile(&smile, WINDOW_WIDTH, WINDOW_HEIGHT);
+        for(int i = 0; i < 2; i++){
+            //Update smile location
+            move_smile(&smile[i], WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        //Make the smile visible
-        make_smile_visible(renderer, &smile);
-
-        //Copy the texture into the renderer
-        //cloneTextureIntoRenderer(renderer, texture);
+            //Make the smile visible
+            make_smile_visible(renderer, &smile[i]);
+        }
 
         //Refresh renderer
         SDL_RenderPresent(renderer);
-
-        //Small pause
-        sleep(0.9);
 
         SDL_WaitEventTimeout(&event, 0.5);
         if(event.type == SDL_QUIT)
             quit = SDL_TRUE;
 
+        //Small pause
+        usleep(2000);
 
     }
 

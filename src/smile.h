@@ -62,4 +62,13 @@ void move_smile(Smile *smile, int max_x, int max_y);
  */
 void make_smile_visible(SDL_Renderer *renderer, Smile *smile);
 
+/**
+ * Make the smile visible on its new location (draw in surface)
+ *
+ * @param SDL_Surface *surface The target surface
+ * @param Smile *smile The smile to make visible
+ * @return void
+ */
+void make_smile_visible_surface(SDL_Surface *surface, Smile *smile);
+
 #endif // SMILE_H_INCLUDED

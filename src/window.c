@@ -8,6 +8,7 @@
 #define WINDOW_HEIGHT 600
 
 #include <SDL2/SDL.h>
+#include "utils.h"
 
 /**
  * Static window pointer
@@ -111,7 +112,7 @@ void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int 
  * @param int height > Dimensions of the new texture (0 = the same as the renderer)
  * @return void
  */
-void createSurface(SDL_Texture **surface, int width, int height){
+void createSurface(SDL_Surface **surface, int width, int height){
 
     //Check if default width and height were requested
     if(width == 0){
@@ -121,9 +122,13 @@ void createSurface(SDL_Texture **surface, int width, int height){
         height = WINDOW_HEIGHT;
     }
 
-    //Create the surface and its form
+    //Create format
     SDL_PixelFormat *surfaceFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
+
+    //Create the surface
     *surface = SDL_CreateRGBSurface(0, width, height, 32, surfaceFormat->Rmask, surfaceFormat->Gmask, surfaceFormat->Bmask, surfaceFormat->Amask);
+
+    //Free the format
     SDL_FreeFormat(surfaceFormat); //Free surface format
 
     //Check for errors
@@ -190,4 +195,15 @@ void fillRenderer(SDL_Color color){
 
     //Update window
     SDL_RenderPresent(local_renderer);
+}
+
+/**
+ * Fill a surface with one color
+ *
+ * @param SDL_Color color The color to use to fill the surface
+ * @return void
+ */
+void fillSurface(SDL_Surface *surface, SDL_Color color){
+
+    SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, color.r, color.g, color.b));
 }

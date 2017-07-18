@@ -32,6 +32,16 @@ int create_WindowAndRenderer(int width, int height, const char *title, SDL_Windo
 void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int height);
 
 /**
+ * Create a new surface
+ *
+ * @param SDL_Surface **surface The new surface
+ * @param int width
+ * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @return void
+ */
+void createSurface(SDL_Surface **surface, int width, int height);
+
+/**
  * Clone a texture into a target
  *
  * @param SDL_Renderer *renderer The target renderer
@@ -53,5 +63,13 @@ void destroy_all_windows();
  * @return void
  */
 void fillRenderer(SDL_Color color);
+
+/**
+ * Fill a surface with one color
+ *
+ * @param SDL_Color color The color to use to fill the surface
+ * @return void
+ */
+void fillSurface(SDL_Surface *surface, SDL_Color color);
 
 #endif // WINDOW_H_INCLUDED

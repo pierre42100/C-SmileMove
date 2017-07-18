@@ -9,10 +9,10 @@
 
 #include "utils.h"
 
-#define MOVE_DOWN 1
+#define MOVE_DOWN 5
 #define MOVE_UP -1
-#define MOVE_LEFT -1
-#define MOVE_RIGHT 1
+#define MOVE_LEFT -2
+#define MOVE_RIGHT 2
 
 /**
  * Smile object structure
@@ -87,7 +87,7 @@ Smile create_smile(const char *filename, SDL_Renderer *renderer){
  * @param int y > Coordinates of the new location
  * @return void
  */
-static void set_new_smile_location(Smile *smile, int x, int y){
+void set_new_smile_location(Smile *smile, int x, int y){
 
     //Append new location
     smile->x = x;
@@ -116,12 +116,12 @@ void move_smile(Smile *smile, int max_x, int max_y){
     //Check if we reached the maximum width and / or height
     if(new_x > (max_x - smile->w/2))
         smile->w_movement = MOVE_LEFT; //We have to go left
-    if(new_x == 0)
+    if(new_x < -smile->w/2)
         smile->w_movement = MOVE_RIGHT; //We have to go right
 
     if(new_y > (max_y - smile->h/2))
         smile->h_movement = MOVE_UP; //We have to go up
-    if(new_y == 0)
+    if(new_y < -smile->h/2)
         smile->h_movement = MOVE_DOWN; //We have to go down
 
     //Set new smile location
@@ -145,6 +145,25 @@ void make_smile_visible(SDL_Renderer *renderer, Smile *smile){
 
     //Copy the smile texture to the target renderer
     SDL_RenderCopy(renderer, smile->texture, NULL, &target_area);
+
+    //End of the function
+    return;
+}
+
+/**
+ * Make the smile visible on its new location (draw in surface)
+ *
+ * @param SDL_Surface *surface The target surface
+ * @param Smile *smile The smile to make visible
+ * @return void
+ */
+void make_smile_visible_surface(SDL_Surface *surface, Smile *smile){
+
+    //Define target rectangle
+    SDL_Rect target_area = {smile->x, smile->y, smile->w, smile->h};
+
+    //Copy the smile texture to the target renderer
+    SDL_BlitSurface(smile->image, NULL, surface, &target_area);
 
     //End of the function
     return;
