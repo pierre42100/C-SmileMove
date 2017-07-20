@@ -21,6 +21,9 @@ struct Smile {
     //The smile object
     SDL_Surface image;
     SDL_Texture *texture;
+
+    //Defines if the smile was initializated or not
+    int initializated;
 };
 typedef struct Smile Smile;
 

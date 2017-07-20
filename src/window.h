@@ -26,7 +26,7 @@ int create_WindowAndRenderer(int width, int height, const char *title, SDL_Windo
  * @param SDL_Renderer *renderer The target renderer
  * @param SDL_Texture *texture The new texture
  * @param int width
- * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @param int height > Dimensions of the new texture
  * @return void
  */
 void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int height);
@@ -36,7 +36,7 @@ void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int 
  *
  * @param SDL_Surface **surface The new surface
  * @param int width
- * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @param int height > Dimensions of the new texture
  * @return void
  */
 void createSurface(SDL_Surface **surface, int width, int height);
@@ -71,5 +71,13 @@ void fillRenderer(SDL_Color color);
  * @return void
  */
 void fillSurface(SDL_Surface *surface, SDL_Color color);
+
+/**
+ * Change a window icon with a given image filename
+ *
+ * @param SDL_Window *window The window to update
+ * @param const char *filename The name of the image to use
+ */
+void changeWindowIcon(SDL_Window *window, const char *filename);
 
 #endif // WINDOW_H_INCLUDED

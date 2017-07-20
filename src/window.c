@@ -4,8 +4,9 @@
  * @author Pierre HUBERT
  */
 
-#define WINDOW_WIDTH 800
-#define WINDOW_HEIGHT 600
+//Unified values
+//#define WINDOW_WIDTH 800
+//#define WINDOW_HEIGHT 600
 
 #include <SDL2/SDL.h>
 #include "utils.h"
@@ -85,18 +86,18 @@ int create_WindowAndRenderer(int width, int height, const char *title, SDL_Windo
  * @param SDL_Renderer *renderer The target renderer
  * @param SDL_Texture *texture The new texture
  * @param int width
- * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @param int height > Dimensions of the new texture
  * @return void
  */
 void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int height){
 
     //Check if default width and height were requested
-    if(width == 0){
+    /*if(width == 0){
         width = WINDOW_WIDTH;
     }
     if(height == 0){
         height = WINDOW_HEIGHT;
-    }
+    }*/
 
     SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, width, height);
 
@@ -109,18 +110,18 @@ void createTexture(SDL_Renderer *renderer, SDL_Texture *texture, int width, int 
  *
  * @param SDL_Surface **surface The new surface
  * @param int width
- * @param int height > Dimensions of the new texture (0 = the same as the renderer)
+ * @param int height > Dimensions of the new texture
  * @return void
  */
 void createSurface(SDL_Surface **surface, int width, int height){
 
     //Check if default width and height were requested
-    if(width == 0){
+    /*if(width == 0){
         width = WINDOW_WIDTH;
     }
     if(height == 0){
         height = WINDOW_HEIGHT;
-    }
+    }*/
 
     //Create format
     SDL_PixelFormat *surfaceFormat = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
@@ -206,4 +207,14 @@ void fillRenderer(SDL_Color color){
 void fillSurface(SDL_Surface *surface, SDL_Color color){
 
     SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, color.r, color.g, color.b));
+}
+
+/**
+ * Change a window icon with a given image filename
+ *
+ * @param SDL_Window *window The window to update
+ * @param const char *filename The name of the image to use
+ */
+void changeWindowIcon(SDL_Window *window, const char *filename){
+
 }

@@ -19,5 +19,13 @@ void sdl_pause();
  */
 void fatal_error(const char *error);
 
+/**
+ * Generates a random number in a specified interval
+ *
+ * @param int min The minimum number
+ * @param int max The maximum number
+ * @return int The result number
+ */
+int alea(int max, int min);
 
 #endif // UTILS_H_INCLUDED

@@ -6,6 +6,7 @@
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "window.h"
 
@@ -19,6 +20,18 @@ void sdl_pause(){
 
         if(event.window.event == SDL_WINDOWEVENT_CLOSE)
                 return;
+}
+
+/**
+ * Generates a random number in a specified interval
+ *
+ * @param int min The minimum number
+ * @param int max The maximum number
+ * @return int The result number
+ */
+int alea(int max, int min){
+    srand(time(NULL));
+    return (rand() % (max - min + 1)) + min;
 }
 
 /**

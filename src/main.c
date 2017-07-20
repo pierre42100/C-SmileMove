@@ -13,18 +13,25 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 
+#define NUMBER_MAX_SMILES 20
+#define NUMBER_INTERVAL_BETWEEN_NEW_SMILES 100
+
 int main(int argc, char *argv[])
 {
     //Initializate variables
+    //SDL Variables
     SDL_Window *window = NULL;
     SDL_Renderer *renderer = NULL;
     SDL_Texture *texture = NULL;
-    //SDL_Surface *surface = NULL;
-    Smile smile[2];
 
     //Event catcher
     SDL_Event event;
     SDL_bool quit = SDL_FALSE;
+
+    //Smile variables
+    Smile smile[NUMBER_MAX_SMILES];
+    int currSmile = 0;
+    int waitBeforeNextSmile = NUMBER_INTERVAL_BETWEEN_NEW_SMILES;
 
     //Prepare colors
     SDL_Color black = {0, 0, 0, 255};
@@ -45,24 +52,42 @@ int main(int argc, char *argv[])
     //Fill renderer in black
     fillRenderer(black);
 
-    //Crate a texture with the same size as the renderer
-    createTexture(renderer, texture, 0, 0);
-
-    //Create smiles
-    smile[0] = create_smile("smile.png", renderer);
-    smile[1] = create_smile("angry.png", renderer);
-
-    //Put angry smile on the middle of the smile
-    set_new_smile_location(&smile[1], WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    //Create a texture with the same size as the renderer
+    createTexture(renderer, texture, WINDOW_WIDTH, WINDOW_HEIGHT);
 
     //Inital pause (let the window appear)
     sleep(0.5);
 
     while(!quit){
 
-        //fillRenderer(black);
+        //Fill the screen
+        fillRenderer(black);
 
-        for(int i = 0; i < 2; i++){
+        //Create a new smile if required
+        if(waitBeforeNextSmile < NUMBER_INTERVAL_BETWEEN_NEW_SMILES){
+            waitBeforeNextSmile++;
+        }
+        else if(currSmile < NUMBER_MAX_SMILES){
+            //Reset counter
+            waitBeforeNextSmile = 0;
+
+            //Create the smile
+            if(currSmile != 2)
+                smile[currSmile] = create_smile("smile.png", renderer);
+            else
+                smile[currSmile] = create_smile("angry.png", renderer);
+
+            //Prepare for next smile
+            currSmile++;
+        }
+
+        //Move and display sime
+        for(int i = 0; i < currSmile; i++){
+
+            //Check if the smile exists
+            if(smile[i].initializated == 0)
+                break;
+
             //Update smile location
             move_smile(&smile[i], WINDOW_WIDTH, WINDOW_HEIGHT);
 
@@ -78,7 +103,7 @@ int main(int argc, char *argv[])
             quit = SDL_TRUE;
 
         //Small pause
-        usleep(2000);
+        usleep(2500);
 
     }
 
